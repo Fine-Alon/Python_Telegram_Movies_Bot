@@ -12,3 +12,15 @@ Database:
 it uses tool ORM as peewee that help create DB by python code only
 
 
+Code can be run by cloning the repository and 
+installing the required libraries with the following command:  pip install -r requirements.txt
+
+The bot is launched using the command: python main.py
+
+commands:
+● movie_search — search for a movie/TV series by title;
+● movie_by_rating — search for movies/TV series by rating;
+● low_budget_movie — search for movies/TV series with a low budget;
+
+● high_budget_movie — search for movies/TV series with a high budget;
+● history — ability to view the history of requests and search for a movie/TV series.
