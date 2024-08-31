@@ -4,8 +4,9 @@ db = SqliteDatabase('movies.db')
 
 
 class MoviesSearchHistory(Model):
-    film_name = CharField()
+    user_id = IntegerField()
     search_data = DateField()
+    film_name = CharField()
     film_descr = CharField()
     film_rating = IntegerField()
     film_created_at = IntegerField()
