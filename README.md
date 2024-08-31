@@ -21,6 +21,7 @@ then you need get your own api key from @BotFather in TG api and put it to
 BOT_TOKEN = "Ваш токен для бота, полученный от @BotFather"
 API_WEBSITE_KEY = "Ваш ключ полученный от API по адресу https://kinopoisk.dev/#api"
 
+bot name is @FindBestMovieForYourEveningBot
 
 commands:
 ● movie_search — search for a movie/TV series by title;
