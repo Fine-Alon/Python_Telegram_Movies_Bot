@@ -1,14 +1,16 @@
 # Инициализация бота. Подключение всех необходимых модулей и запуск бота
 
-# from config_data import config
 import telebot
 from telebot import ContinueHandling, StateMemoryStorage
+from telebot.custom_filters import StateFilter
+
 from tg_api.utils.set_bot_commands import set_default_commands
 from config_data import config
 
 storage = StateMemoryStorage()
 bot = telebot.TeleBot(config.BOT_TOKEN, state_storage=storage)
 
+bot.add_custom_filter(StateFilter(bot))
 set_default_commands(bot)
 
 @bot.message_handler(commands=['help', 'start'])
