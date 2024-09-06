@@ -10,5 +10,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 API_WEBSITE_KEY = os.getenv("API_WEBSITE_KEY")
 DEFAULT_COMMANDS = (
     ("start", "Запустить бота"),
-    ("help", "Вывести справку")
+    ("help", "Вывести справку"),
+    ("history", "Вывести историю запросов"),
+    ("search", "Искать фильм"),
 )
