@@ -1,2 +1,8 @@
+from telebot import TeleBot
+from telebot import StateMemoryStorage
+from config_data import config
 
-# may be not use file
+
+storage = StateMemoryStorage()
+bot = TeleBot(config.BOT_TOKEN, state_storage=storage)
+

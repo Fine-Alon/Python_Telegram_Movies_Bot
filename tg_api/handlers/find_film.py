@@ -1,10 +1,11 @@
 from telebot.types import Message
-from tg_api.core import bot
+from telebot import TeleBot
+from loader import bot
 from tg_api.states.find_film import FindFilmState
 
 
 @bot.message_handler(commands=['find_film'])
-def find_film(message: Message) -> None:
+def find_movie(bot: TeleBot, message: Message) -> None:
     bot.set_state(message.from_user.id, FindFilmState.film, message.chat.id)
     bot.send_message(message.from_user.id, 'Hi {}'
                                            'Please write the name of the film'.format(message.from_user.username))
