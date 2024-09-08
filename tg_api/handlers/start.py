@@ -1,5 +1,4 @@
 from telebot import ContinueHandling, TeleBot
-from loader import bot
 from tg_api.keyboards.reply.history_search import gen_markup_history_search
 
 
