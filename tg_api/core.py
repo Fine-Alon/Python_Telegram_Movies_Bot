@@ -11,11 +11,9 @@ from tg_api.handlers.start import send_welcome
 @bot.message_handler(state='*', func=lambda message: message.text.lower() == 'menu')
 @bot.message_handler(func=lambda message: message.text.lower() == 'menu' or message.text.lower() == '/menu')
 def handle_back_to_menu(message: Message) -> None:
-    print("handle_back_to_menu сработал")  # Лог для проверки
     """
     Обрабатывает команды и текстовые сообщения с запросом 'menu 📋' и '/menu'.
     """
-    print(f"Current state for user {message.from_user.id}: {bot.get_state(message.from_user.id, message.chat.id)}")
 
     bot.delete_state(message.from_user.id, message.chat.id)
     show_main_menu(bot, message)

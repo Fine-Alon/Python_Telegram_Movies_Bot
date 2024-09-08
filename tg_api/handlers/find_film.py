@@ -10,8 +10,8 @@ from website_api.core import RequestSiteApi
 @bot.message_handler(commands=['find_film'])
 def find_movie(bot: TeleBot, message: Message) -> None:
     bot.set_state(message.from_user.id, FindFilmState.film, message.chat.id)
-    bot.send_message(message.from_user.id, 'Hi {}!!!\n'
-                                           'Please write the name of the film'.format(message.from_user.username))
+    bot.send_message(message.from_user.id, 'Hi {}!!!\n\n'
+                                           'please choice the movie criteria you would like to search by'.format(message.from_user.username))
 
 
 @bot.message_handler(state=FindFilmState.film)
