@@ -1,6 +1,8 @@
 from loader import bot
 from telebot.types import Message
 from telebot import TeleBot
+
+from tg_api.handlers.menu import show_main_menu
 from tg_api.states.find_film import FindFilmState
 from website_api.core import RequestSiteApi
 
@@ -14,6 +16,10 @@ def find_movie(bot: TeleBot, message: Message) -> None:
 
 @bot.message_handler(state=FindFilmState.film)
 def get_film_name(message: Message) -> None:
+    if message.text == 'menu' or message.text == '/menu':
+        show_main_menu(bot, message)
+        return
+
     bot.send_message(message.chat.id, 'Well, I\'ve got it!\nPlease write the genre of the film')
     bot.set_state(message.from_user.id, FindFilmState.genre, message.chat.id)
 
@@ -23,6 +29,11 @@ def get_film_name(message: Message) -> None:
 
 @bot.message_handler(state=FindFilmState.genre)
 def get_film_genre(message: Message) -> None:
+    if message.text == 'menu' or message.text == '/menu':
+        bot.delete_state(message.from_user.id, message.chat.id)
+        show_main_menu(bot, message)
+        return
+
     if message.text.isalpha():
         bot.send_message(message.chat.id, 'Well done!\n I\'ve got it\n'
                                           'Please wait until I find films for you')
