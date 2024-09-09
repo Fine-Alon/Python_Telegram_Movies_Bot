@@ -1,17 +1,16 @@
 from loader import bot
 from telebot.types import Message
 from telebot import TeleBot
-
 from tg_api.handlers.menu import show_main_menu
 from tg_api.keyboards.reply.search_criteria import search_criteria
 from tg_api.states.find_film import FindFilmState
-from tg_api.utils.keyboard_criteria_search import keyboard_criteria_search as search_keys
+from tg_api.utils.keyboard_criteria_search import keyboard_criteria_search as s_keys
+from tg_api.utils.process_criteria_btns import process_criteria_btns
 from website_api.core import RequestSiteApi
 
 
 @bot.message_handler(commands=['find_film'])
 def find_movie(bot: TeleBot, message: Message) -> None:
-    # bot.set_state(message.from_user.id, FindFilmState.name, message.chat.id)
     bot.send_message(message.from_user.id, 'Hi {}!!!\n\n'
                                            'please choice the movie criteria you would like to search by'.format(
         message.from_user.username),
@@ -19,23 +18,9 @@ def find_movie(bot: TeleBot, message: Message) -> None:
 
 
 # search_keys = 'By NAME 🏷️', 'By RATING 📊', 'LOW BUDGET movie 🪫', 'HIGH BUDGET movie 🔋']
-@bot.message_handler(func=lambda message: message.text in [search_keys[0][1],
-                                                           search_keys[1][1],
-                                                           search_keys[2][1],
-                                                           search_keys[3][1]])
+@bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
 def handle_search_btns(message: Message) -> None:
-    if message.text == search_keys[0][1]:
-        bot.set_state(message.from_user.id, FindFilmState.name, message.chat.id)
-        bot.send_message(message.chat.id, 'вы выбраи поиск по {}'.format(search_keys[0][0]))
-    elif message.text == search_keys[1][1]:
-        bot.set_state(message.from_user.id, FindFilmState.name, message.chat.id)
-        bot.send_message(message.chat.id, 'вы выбраи поиск по {}'.format(search_keys[1][0]))
-    elif message.text == search_keys[2][1]:
-        bot.set_state(message.from_user.id, FindFilmState.name, message.chat.id)
-        bot.send_message(message.chat.id, 'вы выбраи поиск по {}'.format(search_keys[2][0]))
-    else:
-        bot.set_state(message.from_user.id, FindFilmState.name, message.chat.id)
-        bot.send_message(message.chat.id, 'вы выбраи поиск по {}'.format(search_keys[3][0]))
+    process_criteria_btns(bot, message)
 
 
 @bot.message_handler(state=FindFilmState.name)
