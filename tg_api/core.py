@@ -7,7 +7,6 @@ from tg_api.handlers.menu import show_main_menu
 from tg_api.handlers.start import send_welcome
 
 
-# @bot.message_handler(commands=['menu'])
 @bot.message_handler(state='*', func=lambda message: message.text.lower() == 'menu')
 @bot.message_handler(func=lambda message: message.text.lower() == 'menu' or message.text.lower() == '/menu')
 def handle_back_to_menu(message: Message) -> None:
@@ -21,11 +20,7 @@ def handle_back_to_menu(message: Message) -> None:
 
 @bot.message_handler(commands=['help', 'start'])
 def handle_start(message: Message) -> None:
-    print("handle_start сработал")  # Лог для проверки
     send_welcome(bot, message)
-
-
-# может в хендлерах что то прописать??
 
 
 @bot.message_handler(func=lambda message: message.text == 'history 📑')
@@ -39,9 +34,5 @@ def handle_history(message: Message) -> None:
 
 @bot.message_handler(func=lambda message: message.text == 'search 🔎')
 def handle_search(message: Message) -> None:
-    print("handle_search сработал")  # Лог для проверки
     # вызов сценария по пооиску фильма
     find_movie(bot, message)
-    bot.send_message(message.chat.id,
-                     'сценарий поиска...',
-                     reply_markup=ReplyKeyboardRemove())
