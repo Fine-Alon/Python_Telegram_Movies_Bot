@@ -17,44 +17,50 @@ def find_movie(bot: TeleBot, message: Message) -> None:
                      reply_markup=search_criteria(bot, message))
 
 
-# search_keys = 'By NAME 🏷️', 'By RATING 📊', 'LOW BUDGET movie 🪫', 'HIGH BUDGET movie 🔋']
+# search_keys = ['By NAME 🏷️', 'By RATING 📊', 'LOW BUDGET movie 🪫', 'HIGH BUDGET movie 🔋']
 @bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
 def handle_search_btns(message: Message) -> None:
     process_criteria_btns(bot, message)
+    print('1 - Find State -', bot.get_state(message.from_user.id, message.chat.id))
 
 
 @bot.message_handler(state=FindFilmState.name)
-def get_film_name(message: Message) -> None:
+def get_film_name(message: Message):
+    print('Обработчик состояния FindFilmState:name вызван')  # Лог для отладки
+
+    # условие для выхода в главное меню
     if message.text == 'menu' or message.text == '/menu':
         show_main_menu(bot, message)
+        print('2 - Find State -', bot.get_state(message.from_user.id, message.chat.id))
         return
 
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!\nPlease write the genre of the film')
-    bot.set_state(message.from_user.id, FindFilmState.rating, message.chat.id)
+    print('3 - Find State -', bot.get_state(message.from_user.id, message.chat.id))
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\nPlease write the name of a film')
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['film'] = message.text
+    print("Фильм успешно сохранён:", message.text)
 
 
-@bot.message_handler(state=FindFilmState.rating)
-def get_film_genre(message: Message) -> None:
-    if message.text == 'menu' or message.text == '/menu':
-        bot.delete_state(message.from_user.id, message.chat.id)
-        show_main_menu(bot, message)
-        return
-
-    if message.text.isalpha():
-        bot.send_message(message.chat.id, 'Well done!\n I\'ve got it\n'
-                                          'Please wait until I find films for you')
-        #         here site Api fnc
-        with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-            data['genre'] = message.text
-            film = data.get('film')
-            genre = message.text
-
-        # Создаём экземпляр класса RequestSiteApi
-        api_client = RequestSiteApi()
-        # возможно буду передавать словарь парамтров
-        api_client.get_movie_by_name()
-    else:
-        bot.send_message(message.chat.id, 'Genre must be letters only!')
+# @bot.message_handler(state=FindFilmState.rating)
+# def get_film_genre(message: Message) -> None:
+#     if message.text == 'menu' or message.text == '/menu':
+#         bot.delete_state(message.from_user.id, message.chat.id)
+#         show_main_menu(bot, message)
+#         return
+#
+#     if message.text.isalpha():
+#         bot.send_message(message.chat.id, 'Well done!\n I\'ve got it\n'
+#                                           'Please wait until I find films for you')
+#         #         here site Api fnc
+#         with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+#             data['genre'] = message.text
+#             film = data.get('film')
+#             genre = message.text
+#
+#         # Создаём экземпляр класса RequestSiteApi
+#         api_client = RequestSiteApi()
+#         # возможно буду передавать словарь парамтров
+#         api_client.get_movie_by_name()
+#     else:
+#         bot.send_message(message.chat.id, 'Genre must be letters only!')

@@ -1,5 +1,3 @@
-# Инициализация бота. Подключение всех необходимых модулей и запуск бота
-
 from loader import bot
 from telebot.types import Message, ReplyKeyboardRemove
 from tg_api.handlers.find_film import find_movie
