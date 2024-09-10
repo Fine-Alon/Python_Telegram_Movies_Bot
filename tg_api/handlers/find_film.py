@@ -9,23 +9,23 @@ from tg_api.utils.keyboard_criteria_search import keyboard_criteria_search as s_
 from tg_api.utils.process_criteria_btns import process_criteria_btns
 
 
-@bot.message_handler(commands=['find_film'])
-def find_movie(bot: TeleBot, message: Message) -> None:
-    bot.send_message(message.from_user.id, 'Hi {}!!!\n\n'
-                                           'please choice the movie criteria you would like to search by'.format(
-        message.from_user.username),
-                     reply_markup=search_criteria(bot, message))
+# @bot.message_handler(commands=['find_film'])
+# def find_movie(bot: TeleBot, message: Message) -> None:
+#     bot.send_message(message.from_user.id, 'Hi {}!!!\n\n'
+#                                            'please choice the movie criteria you would like to search by'.format(
+#         message.from_user.username),
+#                      reply_markup=search_criteria(bot, message))
 
 
 # search_keys = ['By NAME 🏷️', 'By RATING 📊', 'LOW BUDGET movie 🪫', 'HIGH BUDGET movie 🔋']
-@bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
-def handle_search_btns(message: Message, state: StateContext) -> None:
-    process_criteria_btns(bot, message, state)
-    print('1. State - ', state.get())
+# @bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
+def handle_search_btns(message: Message) -> None:
+    # process_criteria_btns(bot, message, state)
+    bot.set_state(message.from_user.id, FindFilmState.name)
 
 
 @bot.message_handler(state=FindFilmState.name)
-def get_film_criteria(message: Message, state: StateContext):
+def get_film_criteria(message: Message):
     bot.send_message(message.chat.id, 'Well, I\'ve got it!',
                      reply_markup=ReplyKeyboardRemove())
 

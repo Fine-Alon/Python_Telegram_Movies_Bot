@@ -1,9 +1,9 @@
-from telebot.states.sync.context import StateContext
 from loader import bot
 from telebot.types import Message, ReplyKeyboardRemove
-from tg_api.handlers.find_film import find_movie
+from tg_api.handlers.find_film import handle_search_btns
 from tg_api.handlers.menu import show_main_menu
 from tg_api.handlers.start import send_welcome
+from tg_api.keyboards.reply.search_criteria import search_criteria
 
 
 @bot.message_handler(commands=['help', 'start'])
@@ -13,13 +13,12 @@ def handle_start(message: Message) -> None:
 
 @bot.message_handler(state='*', func=lambda message: message.text.lower() == 'menu')
 @bot.message_handler(func=lambda message: message.text.lower() == 'menu' or message.text.lower() == '/menu')
-def handle_back_to_menu(message: Message, state: StateContext) -> None:
+def handle_back_to_menu(message: Message) -> None:
     """
     Обрабатывает команды и текстовые сообщения с запросом 'menu 📋' и '/menu'.
     """
 
-    state.delete()
-    # bot.delete_state(message.from_user.id, message.chat.id)
+    bot.delete_state(message.from_user.id, message.chat.id)
     show_main_menu(bot, message)
 
 
@@ -34,5 +33,13 @@ def handle_history(message: Message) -> None:
 
 @bot.message_handler(func=lambda message: message.text == 'search 🔎')
 def handle_search(message: Message) -> None:
+    bot.send_message(message.from_user.id, 'Hi {}!!!\n\n'
+                                           'please choice the movie criteria you would like to search by'.format(
+        message.from_user.username),
+                     reply_markup=search_criteria(bot, message))
+
+    # @bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
+
+
     # вызов сценария по пооиску фильма
-    find_movie(bot, message)
+    handle_search_btns(message)
