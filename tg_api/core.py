@@ -4,6 +4,8 @@ from tg_api.handlers.find_film import handle_search_btns
 from tg_api.handlers.menu import show_main_menu
 from tg_api.handlers.start import send_welcome
 from tg_api.keyboards.reply.search_criteria import search_criteria
+from tg_api.utils.keyboard_criteria_search import keyboard_criteria_search as s_keys
+
 
 
 @bot.message_handler(commands=['help', 'start'])
@@ -38,8 +40,14 @@ def handle_search(message: Message) -> None:
         message.from_user.username),
                      reply_markup=search_criteria(bot, message))
 
-    # @bot.message_handler(func=lambda message: message.text in [s_keys[0][1], s_keys[1][1], s_keys[2][1], s_keys[3][1]])
-
-
     # вызов сценария по пооиску фильма
+    # handle_search_btns(message)
+
+
+@bot.message_handler(func=lambda message: message.text in [s_keys[0][1],
+                                                           s_keys[1][1],
+                                                           s_keys[2][1],
+                                                           s_keys[3][1]])
+def handle_search_btn(message):
     handle_search_btns(message)
+
