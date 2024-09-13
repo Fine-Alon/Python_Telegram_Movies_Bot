@@ -9,7 +9,7 @@ class RequestSiteApi:
     _URL = 'https://api.kinopoisk.dev/v1.4/movie'
     params = {
         'page': 1,
-        'limit': 10,
+        'limit': 2,
         'query': 'Рокки'
     }
 
