@@ -17,7 +17,8 @@ def process_criteria_btns(bot: TeleBot, message: Message) -> None:
         bot.register_next_step_handler(message, by_film_name)
     elif message.text == s_keys[1][1]:
         bot.send_message(message.chat.id,
-                         'вы выбрали поиск по: {}\n\nPlease write the rating of a film'.format(s_keys[1][0]))
+                         'вы выбрали поиск по: {}\n\nPlease write the rating of a film'
+                         '\n\nпример: 7 или 10 или 7.2-10'.format(s_keys[1][0]))
         bot.register_next_step_handler(message, by_film_rating)
     elif message.text == s_keys[2][1]:
         bot.send_message(message.chat.id,

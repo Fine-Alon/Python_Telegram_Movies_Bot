@@ -4,7 +4,6 @@ from tg_api.utils.process_criteria_btns import process_criteria_btns
 
 
 def handle_search_btns(message: Message) -> None:
-    print('1', message.text)
     process_criteria_btns(bot, message)
 
 

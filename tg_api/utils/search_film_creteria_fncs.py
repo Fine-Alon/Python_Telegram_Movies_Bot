@@ -8,7 +8,7 @@ api_client = RequestSiteApi()
 
 def by_film_name(message: Message):
     print('by_film_name')
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nWait a little !...',
                      reply_markup=ReplyKeyboardRemove())
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
@@ -33,24 +33,18 @@ def by_film_name(message: Message):
             )
             bot.send_message(message.chat.id, msg)
 
-    bot.send_message(message.chat.id, '\nWait a little...')
-
 
 def by_film_rating(message: Message):
     print("by_film_rating")
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nWait a little !...',
                      reply_markup=ReplyKeyboardRemove())
-    if message.text.isalpha():
-        with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-            data['film'] = message.text
-        print("Фильм успешно сохранён:", message.text)
 
-        # возможно буду передавать словарь парамтров
-        api_client.get_movie_by_name()
-    else:
-        bot.send_message(message.chat.id, 'Genre must be letters only!')
+    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+        data['rating'] = message.text
+    print("Фильм успешно сохранён:", message.text)
 
-    bot.send_message(message.chat.id, '\nWait a little !...')
+    # передаем параметр рейтинг
+    api_client.get_movie_by_rating(message.text)
 
 
 def by_low_budget(message: Message):
