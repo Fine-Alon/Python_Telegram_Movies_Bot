@@ -50,7 +50,6 @@ def by_low_budget(message: Message):
                      reply_markup=ReplyKeyboardRemove())
 
     res = api_client.get_movie_by_low_budget(message.text)
-    print('res: ', res)
     for movie_info in res:
         msg = format_res_to_str(movie_info)
         bot.send_message(message.chat.id, msg)
@@ -61,3 +60,8 @@ def by_high_budget(message: Message):
 
     bot.send_message(message.chat.id, 'Well, I\'ve got it!',
                      reply_markup=ReplyKeyboardRemove())
+
+    res = api_client.get_movie_by_high_budget(message.text)
+    for movie_info in res:
+        msg = format_res_to_str(movie_info)
+        bot.send_message(message.chat.id, msg)

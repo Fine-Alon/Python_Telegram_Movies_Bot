@@ -72,7 +72,16 @@ class RequestSiteApi:
         else:
             return None
 
-# budget.value
-# array[string]
-# (query)
-# Поиск по бюджету фильма (пример: 1000-6666666)
+    def get_movie_by_high_budget(self, outcome_params=None):
+        print(outcome_params)
+        final_params = self.params.copy()
+        budget_value = ['10000001-100000000']
+        final_params.update({'budget.value': budget_value, 'limit': outcome_params})
+        r = requests.get(self._URL, headers={'X-API-KEY': API_WEBSITE_KEY}, params=final_params)
+
+        if r.status_code == 200:
+            movie_list = select_data(r)
+            return movie_list
+        else:
+            return None
+
