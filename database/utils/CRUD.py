@@ -5,16 +5,17 @@ from database.core import MoviesSearchHistory
 def create_record(user_id: int, film_name: str,
                   film_descr: str, film_rating: int, film_created_at: int,
                   film_genre: str, age_rating: int, poster):
+    search_date = datetime.datetime.now()
     recorded_data = MoviesSearchHistory.create(
-        user_id=user_id, search_data=datetime.datetime.now(), film_name=film_name,
+        user_id=user_id, search_date=search_date, film_name=film_name,
         film_descr=film_descr, film_rating=film_rating, film_created_at=film_created_at,
         film_genre=film_genre, age_rating=age_rating, poster=poster
     )
     for movie in MoviesSearchHistory.select().where(MoviesSearchHistory.user_id == user_id).order_by(
-            MoviesSearchHistory.search_data):
+            MoviesSearchHistory.search_date):
         print(
             'Film\'s name is {}, created at {}'.format(
-                movie.film_name, movie.search_data))
+                movie.film_name, movie.search_date))
 
 
 def dell_record(user_id):
