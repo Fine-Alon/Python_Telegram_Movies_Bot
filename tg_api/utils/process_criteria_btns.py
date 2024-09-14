@@ -21,10 +21,14 @@ def process_criteria_btns(bot: TeleBot, message: Message) -> None:
                          '\n\nпример: 7 или 10 или 7.2-10'.format(s_keys[1][0]))
         bot.register_next_step_handler(message, by_film_rating)
     elif message.text == s_keys[2][1]:
+        print(message.text)
+        print(s_keys[2][1])
         bot.send_message(message.chat.id,
-                         'вы выбрали: {}\n\nPlease wait a little...'.format(s_keys[2][0]))
+                         'вы выбрали: {}\n\nPlease wait a little...\n\nPlease write count of'
+                         ' films you want to see\n\nпример: (1) или (4)...'.format(s_keys[2][0]))
         bot.register_next_step_handler(message, by_low_budget)
     else:
         bot.send_message(message.chat.id,
-                         'вы выбрали: {}\n\nPlease wait a little...'.format(s_keys[3][0]))
+                         'вы выбрали: {}\n\nPlease wait a little...\n\nPlease write count of'
+                         ' films you want to see\n\nпример: (1) или (4)...'.format(s_keys[3][0]))
         bot.register_next_step_handler(message, by_high_budget)
