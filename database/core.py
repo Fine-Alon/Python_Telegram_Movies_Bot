@@ -15,7 +15,7 @@ class MoviesSearchHistory(Model):
     poster = BlobField()
 
     class Meta:
-        database = db
+        database = db  # This model uses the 'movies.db' database.
 
 
 db.connect()

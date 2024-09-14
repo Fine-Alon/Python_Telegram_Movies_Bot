@@ -3,14 +3,18 @@ def select_data(res):
     movie_list = []
     # Проходимся по каждому фильму и извлекаем нужные поля
     for movie in data:
+        print(movie)
         movie_info = {
-            'Название': movie.get('name', 'N/A'),
-            'Описание': movie.get('description', 'N/A'),
-            'Рейтинг': movie.get('rating', {}).get('kp', 'N/A'),
-            'Год производства': movie.get('year', 'N/A'),
-            'Жанр': ', '.join([genre.get('name', 'N/A') for genre in movie.get('genres', [])]),
-            'Возрастной рейтинг': movie.get('ageRating', 'N/A'),
-            'Постер': movie.get('poster', {}).get('url', 'N/A')
+            'film_name': movie.get('name', 'N/A'),
+            'film_descr': movie.get('description', 'N/A'),
+            'film_rating': movie.get('rating', {}).get('kp', 'N/A'),
+            'film_created_at': movie.get('year', 'N/A'),
+            'film_genre': ', '.join([genre.get('name', 'N/A') for genre in movie.get('genres', [])]),
+            'age_rating': movie.get('ageRating', 'N/A'),
+            'poster': movie.get('poster', {}).get('url', 'N/A')
         }
+
         movie_list.append(movie_info)
     return movie_list
+
+

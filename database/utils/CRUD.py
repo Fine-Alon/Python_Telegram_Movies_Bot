@@ -1,5 +1,4 @@
 import datetime
-
 from database.core import MoviesSearchHistory
 
 
@@ -7,7 +6,7 @@ def create_record(user_id: int, film_name: str,
                   film_descr: str, film_rating: int, film_created_at: int,
                   film_genre: str, age_rating: int, poster):
     recorded_data = MoviesSearchHistory.create(
-        user_id=user_id, film_name=film_name, search_data=datetime.datetime.now(),
+        user_id=user_id, search_data=datetime.datetime.now(), film_name=film_name,
         film_descr=film_descr, film_rating=film_rating, film_created_at=film_created_at,
         film_genre=film_genre, age_rating=age_rating, poster=poster
     )

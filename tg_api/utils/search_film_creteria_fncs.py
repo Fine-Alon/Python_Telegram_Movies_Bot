@@ -1,6 +1,7 @@
 from telebot.types import Message, ReplyKeyboardRemove
 from loader import bot
 from website_api.core import RequestSiteApi
+from database.utils.CRUD import create_record
 from website_api.utils.format_res_to_str import format_res_to_str
 
 # Создаём экземпляр класса RequestSiteApi
@@ -9,7 +10,7 @@ api_client = RequestSiteApi()
 
 def by_film_name(message: Message):
     print('by_film_name')
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nWait a little !...',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nPlease wait a little...',
                      reply_markup=ReplyKeyboardRemove())
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
@@ -29,7 +30,7 @@ def by_film_name(message: Message):
 
 def by_film_rating(message: Message):
     print("by_film_rating")
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nWait a little !...',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nPlease wait a little...',
                      reply_markup=ReplyKeyboardRemove())
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
@@ -46,7 +47,7 @@ def by_film_rating(message: Message):
 def by_low_budget(message: Message):
     print("by_low_budget")
 
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nPlease wait a little...',
                      reply_markup=ReplyKeyboardRemove())
 
     res = api_client.get_movie_by_low_budget(message.text)
@@ -58,10 +59,11 @@ def by_low_budget(message: Message):
 def by_high_budget(message: Message):
     print("by_high_budget")
 
-    bot.send_message(message.chat.id, 'Well, I\'ve got it!',
+    bot.send_message(message.chat.id, 'Well, I\'ve got it!\n\nPlease wait a little...',
                      reply_markup=ReplyKeyboardRemove())
 
     res = api_client.get_movie_by_high_budget(message.text)
     for movie_info in res:
+        print('movie_info: ', movie_info)
         msg = format_res_to_str(movie_info)
         bot.send_message(message.chat.id, msg)
