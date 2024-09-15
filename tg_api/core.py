@@ -3,7 +3,9 @@ from telebot.types import Message, ReplyKeyboardRemove
 from tg_api.handlers.find_film import handle_search_btns
 from tg_api.handlers.menu import show_main_menu
 from tg_api.handlers.start import send_welcome
+from tg_api.keyboards.inline.yes_or_no_markup import yes_or_no_markup
 from tg_api.keyboards.reply.search_criteria import search_criteria
+from tg_api.utils.histiry_scenario import show_history
 from tg_api.utils.keyboard_criteria_search import keyboard_criteria_search as s_keys
 
 
@@ -27,9 +29,16 @@ def handle_back_to_menu(message: Message) -> None:
 # @bot.message_handler(commands=['history'])
 def handle_history(message: Message) -> None:
     print("handle_history сработал")  # Лог для проверки
-    bot.send_message(message.chat.id,
-                     'запрос на данные и вывод',
-                     reply_markup=ReplyKeyboardRemove())
+    bot.send_message(message.chat.id, 'would you like to past specific date to show you history by this?',
+                     reply_markup=yes_or_no_markup())
+
+
+
+
+
+
+
+
 
 
 @bot.message_handler(func=lambda message: message.text == 'search 🔎')
@@ -38,6 +47,7 @@ def handle_search(message: Message) -> None:
                                            'please choice the movie criteria you would like to search by'.format(
         message.from_user.username),
                      reply_markup=search_criteria(bot, message))
+
 
 # s_keys/search_keys = ['By NAME 🏷️', 'By RATING 📊', 'LOW BUDGET movie 🪫', 'HIGH BUDGET movie 🔋']
 @bot.message_handler(func=lambda message: message.text in [s_keys[0][1],

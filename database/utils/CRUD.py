@@ -23,9 +23,29 @@ def dell_record(user_id):
     return deleted_records
 
 
-def get_record(user_id):
+def get_record(user_id, date=None):
+    records_list = []
     try:
-        record = MoviesSearchHistory.get(MoviesSearchHistory.user_id == user_id)
-        return record
+        if date == None:
+            records = MoviesSearchHistory.select().where(MoviesSearchHistory.user_id == user_id).order_by(
+                MoviesSearchHistory.search_date.desc())
+        else:
+            print('date: ', date)
+            records = MoviesSearchHistory.select().where((MoviesSearchHistory.user_id == user_id)
+                                                         & (MoviesSearchHistory.search_date == date)).order_by(
+                MoviesSearchHistory.search_date.desc())
+        for movie in records:
+            records_list.append(
+                f"Дата поиска: {movie.search_date}\n"
+                f"Фильм: {movie.film_name}\n"
+                f"Описание: {movie.film_descr}\n"
+                f"Рейтинг: {movie.film_rating}\n"
+                f"Год выпуска: {movie.film_created_at}\n"
+                f"Жанры: {movie.film_genre}\n"
+                f"Возрастной рейтинг: {movie.age_rating}\n"
+                f"Постер: {movie.poster}\n"
+                "------------------------------------"
+            )
+        return records_list
     except MoviesSearchHistory.DoesNotExist:
         return None
